@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
 import {
   SafeAreaView,
@@ -14,7 +6,6 @@ import {
   NativeEventEmitter,
   ScrollView,
   View,
-  Text,
   Button,
   FlatList,
   AppState,
@@ -25,23 +16,15 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import { ApplicationProvider, Layout, Text } from '@ui-kitten/components';
+import { mapping, light as lightTheme } from '@eva-design/eva';
+
+
 import BleManager from 'react-native-ble-manager';
 import bytesCounter from 'bytes-counter'; // for getting the number of bytes in a string
 
 const BleManagerModule = NativeModules.BleManager;
 const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
-
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const BASE_UUID = '-5659-402b-aeb3-d2f7dcd1b999';
-const PERIPHERAL_ID = '0000';
-const PRIMARY_SERVICE_ID = '0100';
 
 import { stringToBytes } from 'convert-string';
 
@@ -183,55 +166,6 @@ export default class App extends Component {
           BleManager.retrieveServices(peripheral.id).then((info)=>{
             console.log(info)
           })
-
-
-          // setTimeout(() => {
-
-            /* Test read current RSSI value
-            BleManager.retrieveServices(peripheral.id).then((peripheralData) => {
-              console.log('Retrieved peripheral services', peripheralData);
-              BleManager.readRSSI(peripheral.id).then((rssi) => {
-                console.log('Retrieved actual RSSI value', rssi);
-              });
-            });*/
-
-            // Test using bleno's pizza example
-            // https://github.com/sandeepmistry/bleno/tree/master/examples/pizza
-            // BleManager.retrieveServices(peripheral.id).then((peripheralInfo) => {
-            //   console.log(peripheralInfo);
-            //   var service = '13333333-3333-3333-3333-333333333337';
-            //   var bakeCharacteristic = '13333333-3333-3333-3333-333333330003';
-            //   var crustCharacteristic = '13333333-3333-3333-3333-333333330001';
-
-            //   setTimeout(() => {
-            //     BleManager.startNotification(peripheral.id, service, bakeCharacteristic).then(() => {
-            //       console.log('Started notification on ' + peripheral.id);
-            //       setTimeout(() => {
-        //             BleManager.write(peripheral.id, service, crustCharacteristic, [0]).then(() => {
-        //               console.log('Writed NORMAL crust');
-        //               BleManager.write(peripheral.id, service, bakeCharacteristic, [1,95]).then(() => {
-        //                 console.log('Writed 351 temperature, the pizza should be BAKED');
-        //                 /*
-        //                 var PizzaBakeResult = {
-        //                   HALF_BAKED: 0,
-        //                   BAKED:      1,
-        //                   CRISPY:     2,
-        //                   BURNT:      3,
-        //                   ON_FIRE:    4
-        //                 };*/
-        //               });
-        //             });
-
-        //           }, 500);
-        //         }).catch((error) => {
-        //           console.log('Notification error', error);
-        //         });
-        //       }, 200);
-        //     });
-
-        //   }, 900);
-        // }).catch((error) => {
-        //   console.log('Connection error', error);
         });
       }
     }
@@ -264,16 +198,6 @@ export default class App extends Component {
         }
         console.log(results)
         var iCoffee_id = results[0].id
-        // construct the UUIDs the same way it was constructed in the server component earlier
-        const BASE_UUID = '-5659-402b-aeb3-d2f7dcd1b999';
-        const PERIPHERAL_ID = '0000';
-        const PRIMARY_SERVICE_ID = '0100';
-
-        let primary_service_uuid = PERIPHERAL_ID + PRIMARY_SERVICE_ID + BASE_UUID; // the service UUID
-        let ps_characteristic_uuid = PERIPHERAL_ID + '0300' + BASE_UUID; // the characteristic ID to write on
-
-        var user_input = "pepe,lol"
-        var up = "pl";
 
         let network = {
           ssid: "2.4 Ben ",
@@ -284,14 +208,7 @@ export default class App extends Component {
         let str = JSON.stringify(network); // convert the object to a string
         let bytes = bytesCounter.count(str); // count the number of bytes
         let data = stringToBytes(str); // convert the string to a byte array
-      
-        // const data = stringToBytes(up);
-        // 'ab246008-5b8a-11ea-bc55-0242ac130003'
-        // BleManager.write(iCoffee_id, "938e46ca-5b8a-11ea-bc55-0242ac130003",  "ab246008-5b8a-11ea-bc55-0242ac130003", data, 20)
-        // BleManager.write(iCoffee_id, "ffffffff-ffff-ffff-ffff-fffffffffff0",  "ffffffff-ffff-ffff-ffff-fffffffffff1", data, 20)
-        console.log("yeet###########################################################333333333333")
-        // BleManager.write(iCoffee_id, "abbb",  "ec0e", data, 20)
-        // BleManager.write(iCoffee_id, "938e46ca-5b8a-11ea-bc55-0242ac130003" ,   "938e46ca-5b8a-11ea-bc55-0242ac330003" , data, bytes)
+
         BleManager.write(iCoffee_id, "938e46ca-5b8a-11ea-bc55-0242ac130003" ,   "967e46ca-5b8b-12ea-ac55-0232ac131003" , data, bytes)
         .then(() => {
           // Success code
@@ -361,6 +278,16 @@ const styles = StyleSheet.create({
     margin: 10
   },
 });
+
+const App = () => (
+  <ApplicationProvider mapping={mapping} theme={lightTheme}>
+    <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <Text category='h1'>HOME</Text>
+    </Layout>
+  </ApplicationProvider>
+);
+
+export default App;
 
 // npx react-native start
 // npx react-native run-android --port=8081 --deviceId=988bdc313553543548 --no-jetifier
