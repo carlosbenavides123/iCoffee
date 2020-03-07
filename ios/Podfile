@@ -36,6 +36,8 @@ target 'iCoffee' do
 
   pod 'react-native-ble-plx', :path => '../node_modules/react-native-ble-plx'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'iCoffeeTests' do
     inherit! :search_paths
     # Pods for testing
