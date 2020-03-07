@@ -7,6 +7,8 @@ export function usePeripheral() {
     const [device, setDevice] = useState(new Map)
     const [appState, setAppState] = useState('')
     const [scannedDevices, setScannedDevices] = useState(new Map)
+    const [userSSID, setUserSSID] = useState('')
+    const [userSSIDPassword, setUserSSIDPassword] = useState('')
 
 	return {
 		scanning,
