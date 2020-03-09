@@ -19,6 +19,8 @@ import { ApplicationProvider, Layout, Text, Button, Card} from '@ui-kitten/compo
 
 import  {CoffeeStart}  from '../Components/svg/CoffeeStart/CoffeeStart'
 import {useCoffee} from '../Hooks/useCoffee';
+import {useWs} from '../Hooks/useWs'
+import io from "socket.io-client";
 
 const styles = StyleSheet.create({
   container: {
@@ -32,9 +34,26 @@ const styles = StyleSheet.create({
 
 export function iCoffeeScreen() {
     const coffeeState = useCoffee()
+    const ws = useWs();
 
     function handleCoffeePress() {
-        coffeeState.setCountDown(true)
+      console.log(ws.socket)
+        // if(ws.socket.connected){
+          // attempt again
+          ws.ws.send(JSON.stringify({"Message": "hello"}))
+          console.log(ws.socket)
+          // ws.socket.send(JSON.stringify({"Message":"Hello"}))
+
+          console.log("yeet")
+        // } else {
+        //   ws.socket(new WebSocket('ws://192.168.0.100:12345'));
+        // }
+        // if(ws.socket) {
+        //   console.log("yee")
+        //   console.log(ws.socket)
+        //   ws.socket.send(JSON.stringify({"Message":"Hello!"}))
+        // }
+        // coffeeState.setCountDown(true)
     }
 
     var buttonText = coffeeState.countDown ?  "Est. Time Left: " + coffeeState.countDownTimer + "\n": "Start iCoffee :)"
