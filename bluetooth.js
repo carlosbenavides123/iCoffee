@@ -47,7 +47,7 @@ bleno.on('stateChange', function(state) {
 
 bleno.on('advertisingStart', function(error) {
   console.log(
-    'on -> advertisingStart: ' + (error ? 'error ' + error : 'success'),
+    'on -> advertisingStart: ' + (error ? 'error ' + error : 'success')
   );
 
   if (!error) {
@@ -62,14 +62,14 @@ bleno.on('advertisingStart', function(error) {
               console.log('Read request');
               callback(
                 bleno.Characteristic.RESULT_SUCCESS,
-                new Buffer(terminalResponse).slice(offset),
+                new Buffer(terminalResponse).slice(offset)
               );
             },
             onWriteRequest: function(
               newData,
               offset,
               withoutResponse,
-              callback,
+              callback
             ) {
               if (offset) {
                 callback(bleno.Characteristic.RESULT_ATTR_NOT_LONG);
@@ -81,33 +81,7 @@ bleno.on('advertisingStart', function(error) {
                 piWifi.connectTo(network, function(err) {
                   if (!err) {
                     console.log('success');
-
-                    Object.keys(ifaces).forEach(function (ifname) {
-                      var alias = 0;
-                    
-                      ifaces[ifname].forEach(function (iface) {
-                        if ('IPv4' !== iface.family || iface.internal !== false) {
-                          // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
-                          return;
-                        }
-                    
-                        if (alias >= 1) {
-                          // this single interface has multiple ipv4 addresses
-                          console.log(ifname + ':' + alias, iface.address);
-                        } else {
-                          // this interface has only one ipv4 adress
-                          console.log(ifname, iface.address);
-                        }
-                        ++alias;
-                      });
-                    });
-                    //piWifi.connect(network['ssid'], network['password'], function(err){
-                    //if(err) {
-                    //console.log('error')
-                    //} else {
-                    //console.log('success')
-                    //}
-                    //})
+                    sendIp();
                   } else {
                     console.log('error');
                   }
@@ -129,6 +103,32 @@ bleno.on('advertisingStart', function(error) {
   }
 });
 
+function sendIp() {
+  Object.keys(ifaces).forEach(function (ifname) {
+    var alias = 0;
+  
+    ifaces[ifname].forEach(function (iface) {
+      if ('IPv4' !== iface.family || iface.internal !== false) {
+        // skip over internal (i.e. 127.0.0.1) and non-ipv4 addresses
+        return;
+      }
+  
+      if (alias >= 1) {
+        // this single interface has multiple ipv4 addresses
+        console.log(ifname + ':' + alias, iface.address);
+      } else {
+        // this interface has only one ipv4 adress
+        // console.log(iface.address);
+        wlan0 = iface.address
+        if (wlan0 !== null) {
+          console.log(wlan0)
+        }
+      }
+      ++alias;
+    });
+  });
+}
+
 bleno.on('accept', function(clientAddress) {
   console.log('Accepted connection from: ' + clientAddress);
 });
@@ -136,3 +136,5 @@ bleno.on('accept', function(clientAddress) {
 bleno.on('disconnect', function(clientAddress) {
   console.log('Disconnected from: ' + clientAddress);
 });
+
+sendIp()
