@@ -24,16 +24,21 @@ const styles = StyleSheet.create({
       marginBottom: '1%',
       marginLeft: '2%'
     },
+    activeCard: {
+      width: '96%',
+      marginBottom: '1%',
+      marginLeft: '2%',
+      backgroundColor: 'green'
+    },
   });
 
 
-export function PeripheralItem({bluetoothItem}) {
-  console.log(bluetoothItem, "yahoooooooooooooooooooooooooooooooooooooooooo")
+export function PeripheralItem({bluetoothItem, test, active}) {
 	return(
-        <Card style={styles.card}>
-            <Text >{bluetoothItem[1]["name"]}</Text>
-            <Text >RSSI: {bluetoothItem[1]["rssi"]}</Text>
-            <Text >{bluetoothItem[1]["id"]}</Text>
-        </Card>
+          <Card style={active ? styles.card : styles.activeCard} onPress={() => test(bluetoothItem, bluetoothItem[0])}>
+              <Text >{bluetoothItem[1]["name"]}</Text>
+              <Text >RSSI: {bluetoothItem[1]["rssi"]}</Text>
+              <Text >{bluetoothItem[1]["id"]}</Text>
+          </Card>
 	)
 }

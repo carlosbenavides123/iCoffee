@@ -18,7 +18,6 @@ import {
 
 import { ApplicationProvider, Layout, Text, Button, Card, CardHeader, Input,   Popover, Modal,
   Select} from '@ui-kitten/components';
-// import Modal from "react-native-modal";
 import { Dropdown } from 'react-native-material-dropdown';
 
 import  {CoffeeStart}  from '../Components/svg/CoffeeStart/CoffeeStart'
@@ -60,16 +59,6 @@ const Header = () => (
     title='Customize to your liking.'
   />
 );
-
-// const ounce = [{
-//   value: '4oz',
-// }, {
-//   value: '8oz',
-// }, {
-//   value: '12oz',
-// }, {
-//   value: '16oz'
-// }];
 
 const typeOfCoffee = [
   { text: 'Regular Coffee' },
