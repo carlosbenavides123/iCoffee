@@ -64,7 +64,7 @@ export function useWs(){
 			}
 		}		
 	}	
-        
+
     useEffect(() => {		
 		if(ws === null) { setWs(new WebSocket('ws://192.168.0.100:12345')); }
 		if(ws !== null && rs === 0 ) { configureWebsocket(); heartbeat(ws); }		

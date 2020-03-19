@@ -33,6 +33,8 @@ import {PeripheralItem} from '../Components/PeripheralItem';
 import Modal from 'react-native-modal';
 import Spinner from 'react-native-loading-spinner-overlay';
 
+import bytesCounter from 'bytes-counter'; // for getting the number of bytes in a string
+
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
@@ -61,6 +63,7 @@ export function BluetoothScreen() {
   const [ssid, setSsid] = useState('');
   const [wifiPass, setWifiPass] = useState('');
   const [selected, setSelected] = useState('');
+  const [bluetoothConnecting, setBluetoothConnecting] = useState(false)
 
   const BleManagerModule = NativeModules.BleManager;
   const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -185,14 +188,17 @@ export function BluetoothScreen() {
   }
 
   function test(peripheral) {
+    setBluetoothConnecting(true)
     let id = peripheral[0];
     if (peripheral) {
       if (peripheral_devices.device.size != 0) {
         BleManager.disconnect(id);
         setSelected(0)
+        setBluetoothConnecting(false)
         peripheral_devices.setDevice(new Map());
       } else {
         BleManager.connect(id).then(() => {
+          setBluetoothConnecting(false)
           peripheral_devices.setDevice(peripheral);
 
           BleManager.retrieveServices(id).then(info => {
@@ -212,13 +218,11 @@ export function BluetoothScreen() {
   const list = Array.from(peripheral_devices.scannedDevices);
   return (
     <>
-      {peripheral_devices.scanning && (
         <Spinner
-          visible={peripheral_devices.scanning}
-          textContent={'Scanning for iCoffee!'}
+          visible={bluetoothConnecting}
+          textContent={'Connecting to iCoffee! :)'}
           textStyle={styles.spinnerTextStyle}
         />
-      )}
       <Layout style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ScrollView style={{width: '100%'}}>
           <Button
@@ -274,9 +278,33 @@ export function BluetoothScreen() {
     console.log(wifiPass);
   }
   function handleWifiDetails() {
-    turnOffModal();
-    setWifi();
-    setSsid('');
-    setWifiPass('');
-  }
+
+    let network = {
+      ssid: ssid,
+      password: wifiPass,
+      key_mgmt: "WPA-PSK"
+    }
+
+    let str = JSON.stringify(network); // convert the object to a string
+    let bytes = bytesCounter.count(str); // count the number of bytes
+    let data = stringToBytes(str); // convert the string to a byte array
+
+
+    BleManager.write(selected, "938e46ca-5b8a-11ea-bc55-0242ac130003" ,   "967e46ca-5b8b-12ea-ac55-0232ac131003" , data, bytes)
+        .then(() => {
+          // Success code
+          console.log('Write: ' + data);
+          setWifi();
+          setSsid('');
+          setWifiPass('');
+          turnOffModal();
+        })
+        .catch((error) => {
+          // Failure code
+          console.log("FAIL")
+          console.log(error);
+          turnOffModal();
+        });
+      }
+
 }
