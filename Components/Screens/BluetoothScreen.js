@@ -204,6 +204,7 @@ export function BluetoothScreen() {
           BleManager.retrieveServices(id).then(info => {
             setSelected(id)
             setVisibleModal(true)
+            read(id)
           });
         });
       }
@@ -289,7 +290,6 @@ export function BluetoothScreen() {
     let bytes = bytesCounter.count(str); // count the number of bytes
     let data = stringToBytes(str); // convert the string to a byte array
 
-
     BleManager.write(selected, "938e46ca-5b8a-11ea-bc55-0242ac130003" ,   "967e46ca-5b8b-12ea-ac55-0232ac131003" , data, bytes)
         .then(() => {
           // Success code
@@ -306,5 +306,19 @@ export function BluetoothScreen() {
           turnOffModal();
         });
       }
+
+    function read(id) {
+      console.log(id, "555555555555555555555555555555555555555555555555555555555555555555555555555555555555555")
+      BleManager.read(id, "938e46ca-5b8a-11ea-bc55-0242ac130003" ,   "967e46ca-5b8b-12ea-ac55-0232ac131003")
+      .then((res) => {
+        console.log(res)
+        var uint8array = String.fromCharCode.apply(null, new Uint16Array(res));
+        console.log(uint8array)
+
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    }
 
 }
