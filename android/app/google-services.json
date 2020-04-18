@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "8532134228",
+    "firebase_url": "https://icoffee-9ae7c.firebaseio.com",
+    "project_id": "icoffee-9ae7c",
+    "storage_bucket": "icoffee-9ae7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:8532134228:android:03e67d33289c9fe46420c1",
+        "android_client_info": {
+          "package_name": "com.icoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "8532134228-g3lcqpf4u44c271kj7i6k91bll8cses1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtsL0ZJSbj_nQzA-8lzl-hV8P7sfvQf00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "8532134228-g3lcqpf4u44c271kj7i6k91bll8cses1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
