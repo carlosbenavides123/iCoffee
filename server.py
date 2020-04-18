@@ -66,7 +66,7 @@ class SimpleEcho(WebSocket):
         self.sendMessage(message)
 
         while True:
-            print(data["data"])
+            print(data["Data"])
             break
             # GPIO.output(GPIO_1, False)
             # print("on")
