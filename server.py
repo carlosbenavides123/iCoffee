@@ -73,7 +73,7 @@ class SimpleEcho(WebSocket):
         wait_time = 1
         fcm_event = threading.Event()
         device_id = "dVtCi3loRKCgsAyuQrW8bP:APA91bGIUCspZLJ2nJ3TrNRM775ANsGF5C2ra6_6ZaSETY4YKEFHWWcBhS4KXuL3m0YQ-HzRK8KZhtHU5tDszMyjtvGwJlARW_sZBGwZbesL8Yu_llUp0u7Ouvv-WMI0tixrlBxqL1L4"
-        threading.Timer(wait_time, fcm_event, [device_id]).start()
+        threading.Timer(wait_time, self.send_fcm_notif, [device_id]).start()
 
 
         # GPIO.output(GPIO_1, False)
