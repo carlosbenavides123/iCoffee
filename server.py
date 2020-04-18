@@ -95,6 +95,7 @@ class SimpleEcho(WebSocket):
                 }
         }
         r = requests.post('https://fcm.googleapis.com/fcm/send', json=json.dumps(data))
+        print("looool")
 
 
     def read_temp_raw(self):
