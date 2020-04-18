@@ -4,15 +4,15 @@ import glob
 import time
 import RPi.GPIO as GPIO
 
-os.system('modprobe w1-gpio')
-os.system('modprobe w1-therm')
-base_dir = '/sys/bus/w1/devices/'
-device_folder = glob.glob(base_dir + '28*')[0]
-device_file = device_folder + '/w1_slave'
-GPIO.setmode(GPIO.BCM)
-GPIO_1 = 17
-GPIO_2 = 2
-GPIO.setup(GPIO_1, GPIO.OUT)
+# os.system('modprobe w1-gpio')
+# os.system('modprobe w1-therm')
+# base_dir = '/sys/bus/w1/devices/'
+# device_folder = glob.glob(base_dir + '28*')[0]
+# device_file = device_folder + '/w1_slave'
+# GPIO.setmode(GPIO.BCM)
+# GPIO_1 = 17
+# GPIO_2 = 2
+# GPIO.setup(GPIO_1, GPIO.OUT)
 
 import ast
 clients = []
@@ -66,12 +66,14 @@ class SimpleEcho(WebSocket):
         self.sendMessage(message)
 
         while True:
-            GPIO.output(GPIO_1, False)
-            print("on")
-            self.get_temp()
-            GPIO.output(GPIO_1, True)
-            print("off")
-            time.sleep(1)
+            print("hello")
+            break
+            # GPIO.output(GPIO_1, False)
+            # print("on")
+            # self.get_temp()
+            # GPIO.output(GPIO_1, True)
+            # print("off")
+            # time.sleep(1)
 
     def read_temp_raw(self):
         f = open(device_file, 'r')
