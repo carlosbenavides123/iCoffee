@@ -86,7 +86,7 @@ class SimpleEcho(WebSocket):
         message = unicode(message)
         self.sendMessage(message)
 
-    def send_fcm_notif(device_id):
+    def send_fcm_notif(self, device_id):
         data = {
              "to" : " dVtCi3loRKCgsAyuQrW8bP:APA91bGIUCspZLJ2nJ3TrNRM775ANsGF5C2ra6_6ZaSETY4YKEFHWWcBhS4KXuL3m0YQ-HzRK8KZhtHU5tDszMyjtvGwJlARW_sZBGwZbesL8Yu_llUp0u7Ouvv-WMI0tixrlBxqL1L4",
             "data":{
