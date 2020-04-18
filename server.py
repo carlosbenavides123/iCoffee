@@ -1,7 +1,12 @@
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+import os
+import glob
+import time
+import RPi.GPIO as GPIO
+
 import ast
-print("yeet")
 clients = []
+
 class SimpleEcho(WebSocket):
 
     def handleMessage(self):
@@ -48,9 +53,50 @@ class SimpleEcho(WebSocket):
         print("Boiling")
         message = {"Type": "State", "Message": "Boiling"}
         message = unicode(message)
-        # mydict = {k: unicode(v).encode("utf-8") for k,v in message.iteritems()}
         self.sendMessage(message)
-        # self.sendMessage(json.dump({"data": {"message": "Boiling"}}))
+
+        os.system('modprobe w1-gpio')
+        os.system('modprobe w1-therm')
+        base_dir = '/sys/bus/w1/devices/'
+        device_folder = glob.glob(base_dir + '28*')[0]
+        device_file = device_folder + '/w1_slave'
+        GPIO.setmode(GPIO.BCM)
+        GPIO_1 = 17
+        GPIO_2 = 2
+        GPIO.setup(GPIO_1, GPIO.OUT)
+
+        while True:
+            GPIO.output(GPIO_1, False)
+            print("on")
+            self.get_temp()
+            GPIO.output(GPIO_1, True)
+            print("off")
+            time.sleep(1)
+
+    def read_temp_raw(self):
+        f = open(device_file, 'r')
+        lines = f.readlines()
+        f.close()
+        return lines
+
+    def read_temp(self):
+        lines = read_temp_raw()
+        while lines[0].strip()[-3:] != 'YES':
+            time.sleep(0.2)
+            lines = read_temp_raw()
+        equals_pos = lines[1].find('t=')
+        if equals_pos != -1:
+            temp_string = lines[1][equals_pos+2:]
+            temp_c = float(temp_string) / 1000.0
+            temp_f = temp_c * 9.0 / 5.0 + 32.0
+            return temp_c, temp_f
+
+    def get_temp(self):
+        while True:
+            c, f = read_temp()
+            print(c, f)
+            if f >= 205:
+                break
 
 
 server = SimpleWebSocketServer("0.0.0.0", 12345, SimpleEcho)

@@ -34,6 +34,7 @@ import Modal from 'react-native-modal';
 import Spinner from 'react-native-loading-spinner-overlay';
 
 import bytesCounter from 'bytes-counter'; // for getting the number of bytes in a string
+import {useRNStorage} from '../Hooks/useRNStorage'
 
 const styles = StyleSheet.create({
   container: {
@@ -64,6 +65,7 @@ export function BluetoothScreen() {
   const [wifiPass, setWifiPass] = useState('');
   const [selected, setSelected] = useState('');
   const [bluetoothConnecting, setBluetoothConnecting] = useState(false)
+  const state = useRNStorage()
 
   const BleManagerModule = NativeModules.BleManager;
   const bleManagerEmitter = new NativeEventEmitter(BleManagerModule);
@@ -314,7 +316,7 @@ export function BluetoothScreen() {
         console.log(res)
         var uint8array = String.fromCharCode.apply(null, new Uint16Array(res));
         console.log(uint8array)
-
+        state.updateiCoffeeIP(uint8array)
       })
       .catch((err) => {
         console.log(err)

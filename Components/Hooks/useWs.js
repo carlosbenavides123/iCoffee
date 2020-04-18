@@ -1,9 +1,11 @@
 import io from "socket.io-client";
 import {useEffect, useState} from 'react'
+import {useRNStorage} from './useRNStorage';
 
 export function useWs(){
 	const [ rs, setRs ] = useState(0);
     const [ ws, setWs] = useState(null);  
+	const state = useRNStorage();
 
     const heartbeat = async (ws) => { 		
 		setTimeout(
@@ -65,10 +67,18 @@ export function useWs(){
 		}		
 	}	
 
-    useEffect(() => {		
-		if(ws === null) { setWs(new WebSocket('ws://192.168.0.100:12345')); }
+    useEffect(() => {
+		if (state.iCoffeeIP == null){
+			return
+		}
+		var wsIp;
+		if (state.iCoffeeIP){
+			wsIp = "ws://" + state.iCoffeeIP.toString() + ":12345"
+		}
+		console.log(wsIp)
+		if(ws === null) { setWs(new WebSocket(wsIp)) }
 		if(ws !== null && rs === 0 ) { configureWebsocket(); heartbeat(ws); }		
-	},[ws,rs])
+	},[ws,rs, state.iCoffeeIP])
 
     return {
         ws,
