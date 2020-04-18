@@ -25,6 +25,7 @@ var terminalResponse;
 var START_CHAR = String.fromCharCode(002); //START OF TEXT CHAR
 var END_CHAR = String.fromCharCode(003); //END OF TEXT CHAR
 
+var wlan0 = ""
 function sliceUpResponse(callback, responseText) {
   if (!responseText || !responseText.trim()) return;
   callback(new Buffer(START_CHAR));
@@ -62,7 +63,7 @@ bleno.on('advertisingStart', function(error) {
               console.log('Read request');
               callback(
                 bleno.Characteristic.RESULT_SUCCESS,
-                new Buffer(terminalResponse).slice(offset)
+                new Buffer(wlan0).slice(offset)
               );
             },
             onWriteRequest: function(
