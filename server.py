@@ -64,16 +64,18 @@ class SimpleEcho(WebSocket):
         message = {"Type": "State", "Message": "Boiling"}
         message = unicode(message)
         self.sendMessage(message)
+        oz = data["Data"]["Oz"]
+        coffee_type = data["Data"]["Type"]
 
-        while True:
-            print(data["Data"])
-            break
-            # GPIO.output(GPIO_1, False)
-            # print("on")
-            # self.get_temp()
-            # GPIO.output(GPIO_1, True)
-            # print("off")
-            # time.sleep(1)
+        GPIO.output(GPIO_1, False)
+        self.get_temp(coffee_type)
+        GPIO.output(GPIO_1, True)
+        print("off")
+        time.sleep(1)
+
+        message = {"Type": "State", "Message": "Drip"}
+        message = unicode(message)
+        self.sendMessage(message)
 
     def read_temp_raw(self):
         f = open(device_file, 'r')
@@ -93,12 +95,16 @@ class SimpleEcho(WebSocket):
             temp_f = temp_c * 9.0 / 5.0 + 32.0
             return temp_c, temp_f
 
-    def get_temp(self):
-        while True:
-            c, f = read_temp()
-            print(c, f)
-            if f >= 205:
-                break
+    def get_temp(self, coffee_type):
+        temp = 195
+        if coffee_type != "Regular Coffee":
+            temp = 205
+        print(temp)
+        # while True:
+        #     c, f = read_temp()
+        #     print(c, f)
+        #     if f >= temp:
+        #         break
 
 
 server = SimpleWebSocketServer("0.0.0.0", 12345, SimpleEcho)
