@@ -92,37 +92,34 @@ export function iCoffeeScreen() {
   };
   const Footer = () => (
     <View style={styles.footerContainer}>
-      <Button onPress={lol}>Start iCoffee! :)</Button>
+      <Button onPress={submitToWS}>Start iCoffee! :)</Button>
     </View>
   );
 
-  function lol() {
+  function submitToWS() {
     console.log(oz);
     console.log(coffeeType);
+    ws.ws.send(JSON.stringify({Message: 'hello', Data: {oz: oz, type: coffeeType}}));
+    coffeeState.setCountDown(true)
+    turnOffModal()
   }
 
   function handleCoffeePress() {
-    setVisibleModal(true);
     if (state.iCoffeeIP == '') {
       return;
     }
+    setVisibleModal(true);
     var wsIp = 'ws://' + state.iCoffeeIP.toString() + ':12345';
     if (ws.ws === null) {
       ws.setWs(new WebSocket(wsIp));
       console.log('uh oh');
-    }
-    if (ws.ws) {
-      ws.ws.send(JSON.stringify({Message: 'hello'}));
-      console.log(ws.socket);
-      ws.ws.send(JSON.stringify({Message: 'Hello'}));
-      coffeeState.setCountDown(true)
     }
   }
 
   var buttonText = coffeeState.countDown
     ? 'Est. Time Left: ' + coffeeState.countDownTimer + '\n'
     : 'Start iCoffee :)';
-  var buttonTextExtra = coffeeState.countDown ? 'iCoffee is currently ' : '';
+  var buttonTextExtra = coffeeState.countDown ? `iCoffee is currently ${ws.coffeeState}` : '';
 
   return (
     <>

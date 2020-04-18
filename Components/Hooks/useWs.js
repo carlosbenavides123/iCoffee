@@ -4,7 +4,8 @@ import {useRNStorage} from './useRNStorage';
 
 export function useWs(){
 	const [ rs, setRs ] = useState(0);
-    const [ ws, setWs] = useState(null);  
+	const [ ws, setWs] = useState(null);  
+	const [ coffeeState, setCoffeeState] = useState('')
 	const state = useRNStorage();
 
     const heartbeat = async (ws) => { 		
@@ -52,7 +53,9 @@ export function useWs(){
                 
 				switch(jsonData['Message']) {
                     case 'Boiling':
-                        console.log("Ya yeet")
+						console.log("Boiling")
+						setCoffeeState('Boiling Water.')
+						break;
 					default:
                         console.log("WTF")
 						break;
@@ -84,6 +87,8 @@ export function useWs(){
         ws,
         setWs,
         rs,
-        setRs
+		setRs,
+		coffeeState,
+		setCoffeeState
     }
 }

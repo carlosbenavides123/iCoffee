@@ -26,7 +26,7 @@ class SimpleEcho(WebSocket):
         print(data)
         print(type(data))
         if data["Message"] == "hello":
-            self.boilWater()
+            self.boilWater(data)
 
         # data = ast.literal_eval(self.data)        
         # self.sendMessage(json.dumps({"Type": "Pong", "Message": "ALIVE"}))
@@ -58,7 +58,7 @@ class SimpleEcho(WebSocket):
         clients.remove(self)
         print(self.address, 'closed')
 
-    def boilWater(self):
+    def boilWater(self, data):
         print("#########")
         print("Boiling")
         message = {"Type": "State", "Message": "Boiling"}
@@ -66,7 +66,7 @@ class SimpleEcho(WebSocket):
         self.sendMessage(message)
 
         while True:
-            print("hello")
+            print(data["data"])
             break
             # GPIO.output(GPIO_1, False)
             # print("on")
