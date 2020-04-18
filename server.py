@@ -88,13 +88,17 @@ class SimpleEcho(WebSocket):
 
     def send_fcm_notif(self, device_id):
         data = {
-             "to" : " dVtCi3loRKCgsAyuQrW8bP:APA91bGIUCspZLJ2nJ3TrNRM775ANsGF5C2ra6_6ZaSETY4YKEFHWWcBhS4KXuL3m0YQ-HzRK8KZhtHU5tDszMyjtvGwJlARW_sZBGwZbesL8Yu_llUp0u7Ouvv-WMI0tixrlBxqL1L4",
+             "to" : device_id,
             "data":{
                 "body" : "Drink up!",
                 "title": "Your Coffee is ready! :)"
                 }
         }
-        r = requests.post('https://fcm.googleapis.com/fcm/send', json=json.dumps(data))
+        headers = {
+            'Authorization': 'key=AAAAAfyOCVQ:APA91bGZcP0JCEDgootuc-M9d-Q-l3Xuip7_ox2B0e5jZXLgfW4fTVOjfi61eGXafZxZEvqtf4awk3kOHvTXaBf-KutFyxhXir7PgC9pbgwzywDHNEVpGpsVdBU36NbajS-cYr5UFl8G',
+            'Content-Type': 'application/json'
+        }
+        r = requests.post('https://fcm.googleapis.com/fcm/send', data=json.dumps(data), headers=headers)
         print("looool")
 
 

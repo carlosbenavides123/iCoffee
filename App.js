@@ -7,6 +7,7 @@ import { mapping, light as lightTheme } from '@eva-design/eva';
 import Icon from 'react-native-ionicons'
 import {Platform} from 'react-native';
 import { Alert } from 'react-native';
+import {useWs} from './Components/Hooks/useWs'
 
 import { BluetoothScreen } from './Components/Screens/BluetoothScreen'
 
@@ -20,6 +21,8 @@ var PushNotification = require("react-native-push-notification");
 
 const Tab = createBottomTabNavigator();
 export default function App() {
+  const ws = useWs();
+
   PushNotification.configure({
     // (optional) Called when Token is generated (iOS and Android)
     onRegister: function(token) {
@@ -64,7 +67,7 @@ export default function App() {
         actions: '["OK"]',  // (Android only) See the doc for notification actions to know more
     });
       // process the notification
-   
+      ws.setCoffeeState('done! \n Enjoy your coffee!')
       // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
       // notification.finish(PushNotificationIOS.FetchResult.NoData);
     },
