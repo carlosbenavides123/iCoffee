@@ -70,7 +70,7 @@ class SimpleEcho(WebSocket):
         coffee_type = data["Data"]["Type"]
 
         wait_time = 420
-        wait_time = 1
+        # wait_time = 1
         fcm_event = threading.Event()
         device_id = "dVtCi3loRKCgsAyuQrW8bP:APA91bGIUCspZLJ2nJ3TrNRM775ANsGF5C2ra6_6ZaSETY4YKEFHWWcBhS4KXuL3m0YQ-HzRK8KZhtHU5tDszMyjtvGwJlARW_sZBGwZbesL8Yu_llUp0u7Ouvv-WMI0tixrlBxqL1L4"
         threading.Timer(wait_time, self.send_fcm_notif, [device_id]).start()
