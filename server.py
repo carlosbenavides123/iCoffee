@@ -67,9 +67,9 @@ class SimpleEcho(WebSocket):
         oz = data["Data"]["Oz"]
         coffee_type = data["Data"]["Type"]
 
-        GPIO.output(GPIO_1, False)
+        # GPIO.output(GPIO_1, False)
         self.get_temp(coffee_type)
-        GPIO.output(GPIO_1, True)
+        # GPIO.output(GPIO_1, True)
         print("off")
         time.sleep(1)
 
