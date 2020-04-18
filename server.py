@@ -3,7 +3,9 @@ import os
 import glob
 import time
 import RPi.GPIO as GPIO
-
+import threading
+import requests
+import json
 # os.system('modprobe w1-gpio')
 # os.system('modprobe w1-therm')
 # base_dir = '/sys/bus/w1/devices/'
@@ -67,6 +69,13 @@ class SimpleEcho(WebSocket):
         oz = data["Data"]["Oz"]
         coffee_type = data["Data"]["Type"]
 
+        wait_time = 420
+        wait_time = 1
+        fcm_event = threading.Event()
+        device_id = "dVtCi3loRKCgsAyuQrW8bP:APA91bGIUCspZLJ2nJ3TrNRM775ANsGF5C2ra6_6ZaSETY4YKEFHWWcBhS4KXuL3m0YQ-HzRK8KZhtHU5tDszMyjtvGwJlARW_sZBGwZbesL8Yu_llUp0u7Ouvv-WMI0tixrlBxqL1L4"
+        threading.Timer(wait_time, fcm_event, [device_id]).start()
+
+
         # GPIO.output(GPIO_1, False)
         self.get_temp(coffee_type)
         # GPIO.output(GPIO_1, True)
@@ -76,6 +85,17 @@ class SimpleEcho(WebSocket):
         message = {"Type": "State", "Message": "Drip"}
         message = unicode(message)
         self.sendMessage(message)
+
+    def send_fcm_notif(device_id):
+        data = {
+             "to" : " dVtCi3loRKCgsAyuQrW8bP:APA91bGIUCspZLJ2nJ3TrNRM775ANsGF5C2ra6_6ZaSETY4YKEFHWWcBhS4KXuL3m0YQ-HzRK8KZhtHU5tDszMyjtvGwJlARW_sZBGwZbesL8Yu_llUp0u7Ouvv-WMI0tixrlBxqL1L4",
+            "data":{
+                "body" : "Drink up!",
+                "title": "Your Coffee is ready! :)"
+                }
+        }
+        r = requests.post('https://fcm.googleapis.com/fcm/send', json=json.dumps(data))
+
 
     def read_temp_raw(self):
         f = open(device_file, 'r')

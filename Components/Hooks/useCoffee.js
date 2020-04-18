@@ -1,12 +1,14 @@
 
 import { useState, useEffect } from 'react';
+import {useWs} from './useWs'
 
 export function useCoffee() {
+
+    const ws = useWs();
 
     const [nightTime, setNightTime] = useState(false)
     const [countDown, setCountDown] = useState(false)
     const [countDownTimer, setCountDownTimer] = useState('')
-    const [coffeeState, setCoffeeState] = useState('')
     const [appState, setAppState] = useState('')
     const [scannedDevices, setScannedDevices] = useState(new Map)
 
@@ -42,6 +44,9 @@ export function useCoffee() {
             timer2 = minutes + ':' + seconds;
             console.log(timer2)
             setCountDownTimer(timer2)
+            if(timer2 == "0:00"){
+                setCountDown(false)
+            }
           }, 1000);
     }
 
@@ -51,6 +56,15 @@ export function useCoffee() {
             startTimer("7:00")
         }
     }, [countDown])
+
+    // useEffect(() => {
+    //     if (countDownTimer == "0:00") {
+    //         ws.setCoffeeState(n => "xd")
+    //         // setTimeout(ws.setCoffeeState("xd"), 1000);
+            
+    //     }
+    // }, [countDownTimer])
+    
 
 	return {
 		nightTime,

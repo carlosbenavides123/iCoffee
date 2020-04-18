@@ -56,6 +56,10 @@ export function useWs(){
 						console.log("Boiling")
 						setCoffeeState('Boiling Water.')
 						break;
+					case 'Drip':
+						console.log("Drip")
+						setCoffeeState('dripping coffee!')
+						break;	
 					default:
                         console.log("WTF")
 						break;
