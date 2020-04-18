@@ -99,7 +99,7 @@ export function iCoffeeScreen() {
   function submitToWS() {
     console.log(oz);
     console.log(coffeeType);
-    ws.ws.send(JSON.stringify({Message: 'hello', Data: {oz: oz, type: coffeeType}}));
+    ws.ws.send(JSON.stringify({Message: 'hello', Data: {"Oz": oz['text'], "Type": coffeeType['text']}}));
     coffeeState.setCountDown(true)
     turnOffModal()
   }
