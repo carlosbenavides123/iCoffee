@@ -95,8 +95,8 @@ export default function App() {
                 if (route.name == 'iCoffee') {
                   iconNameAndroid = focused ? 'ios-cafe' : 'ios-cafe';
                   iconNameIOS = focused ? 'radio' : 'radio-outline'
-                } else if (route.name == 'Bluetooth') {
-                  iconNameAndroid = focused ? 'md-bluetooth' : 'md-bluetooth'
+                } else if (route.name == 'Settings') {
+                  iconNameAndroid = focused ? 'md-settings' : 'md-settings'
                 }
 
                 // You can return any component that you like here!
@@ -109,7 +109,7 @@ export default function App() {
             }}
           >
             <Tab.Screen name="iCoffee" component={iCoffeeScreen} />
-            <Tab.Screen name="Bluetooth" component={BluetoothScreen} />
+            <Tab.Screen name="Settings" component={BluetoothScreen} />
           </Tab.Navigator>
         </NavigationContainer>
     </ApplicationProvider>
