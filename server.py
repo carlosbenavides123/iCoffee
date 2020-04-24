@@ -17,8 +17,9 @@ GPIO_1 = 17
 # motor forward
 GPIO_2 = 27
 # motor reverse
-GPIO_3 = 22
+#PIO_3 = 22
 GPIO.setup(GPIO_1, GPIO.IN)
+GPIO.setup(GPIO_2, GPIO.OUT)
 # GPIO.setup(GPIO_2, GPIO.OUT)
 # GPIO.setup(GPIO_3, GPIO.OUT)
 
@@ -98,11 +99,13 @@ class SimpleEcho(WebSocket):
 
         # GPIO.setup(GPIO_2, False)
         print("motor forward")
-        GPIO.setup(GPIO_2, GPIO.IN)
-        GPIO.setup(GPIO_3, GPIO.OUT)
+        GPIO.output(GPIO_2, False)
+        # GPIO.setup(GPIO_2, GPIO.IN)
+        # GPIO.setup(GPIO_3, GPIO.OUT)
         time.sleep(30)
-        GPIO.setup(GPIO_2, GPIO.OUT)
-        GPIO.setup(GPIO_3, GPIO.IN)
+        GPIO.output(GPIO_2, True)
+        # GPIO.setup(GPIO_2, GPIO.OUT)
+        # GPIO.setup(GPIO_3, GPIO.IN)
         print("done")
         GPIO.cleanup()
         self.send_fcm_notif(device_id)
