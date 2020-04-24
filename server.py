@@ -77,8 +77,11 @@ class SimpleEcho(WebSocket):
 
         print("start to boil")
         GPIO.output(GPIO_1, False)
+        print("LOG GPIO1 FALSE ")
+        print("GET TEMP")
         self.get_temp(coffee_type)
         GPIO.output(GPIO_1, True)
+        print("LOG GPIO1 TRUE")
         print("off")
         time.sleep(1)
 
@@ -122,11 +125,14 @@ class SimpleEcho(WebSocket):
             return temp_c, temp_f
 
     def get_temp(self, coffee_type):
+        print(1)
         temp = 195
         if coffee_type != "Regular Coffee":
             temp = 205
+        print(2)
         while True:
-            c, f = read_temp()
+            print(3)
+            c, f = self.read_temp()
             
             print(c, f)
             if f >= temp:
