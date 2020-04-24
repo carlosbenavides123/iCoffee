@@ -76,11 +76,11 @@ class SimpleEcho(WebSocket):
         threading.Timer(wait_time, self.send_fcm_notif, [device_id]).start()
 
         print("start to boil")
-        GPIO.output(GPIO_1, False)
+        GPIO.setup(GPIO_1, False)
         print("LOG GPIO1 FALSE ")
         print("GET TEMP")
         self.get_temp(coffee_type)
-        GPIO.output(GPIO_1, True)
+        GPIO.setup(GPIO_1, True)
         print("LOG GPIO1 TRUE")
         print("off")
         time.sleep(1)
