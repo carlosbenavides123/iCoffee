@@ -114,10 +114,10 @@ class SimpleEcho(WebSocket):
 
     def read_temp(self):
         print("read temp")
-        lines = read_temp_raw()
+        lines = self.read_temp_raw()
         while lines[0].strip()[-3:] != 'YES':
             time.sleep(0.2)
-            lines = read_temp_raw()
+            lines = self.read_temp_raw()
         print("read lines")
         equals_pos = lines[1].find('t=')
         if equals_pos != -1:
