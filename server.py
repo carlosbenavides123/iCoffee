@@ -98,13 +98,14 @@ class SimpleEcho(WebSocket):
 
         # GPIO.setup(GPIO_2, False)
         print("motor forward")
-        GPIO.setup(GPIO_2, True)
+        GPIO.setup(GPIO_2, False)
         GPIO.setup(GPIO_3, False)
         time.sleep(30)
-        GPIO.setup(GPIO_2, False)
+        GPIO.setup(GPIO_2, True)
         GPIO.setup(GPIO_3, True)
         print("done")
         GPIO.cleanup()
+        self.send_fcm_notif(device_id)
 
 
     def send_fcm_notif(self, device_id):
