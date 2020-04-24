@@ -19,8 +19,8 @@ GPIO_2 = 27
 # motor reverse
 GPIO_3 = 22
 GPIO.setup(GPIO_1, GPIO.IN)
-GPIO.setup(GPIO_2, GPIO.OUT)
-GPIO.setup(GPIO_3, GPIO.OUT)
+# GPIO.setup(GPIO_2, GPIO.OUT)
+# GPIO.setup(GPIO_3, GPIO.OUT)
 
 import ast
 clients = []
