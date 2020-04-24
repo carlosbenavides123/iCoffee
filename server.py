@@ -62,12 +62,13 @@ class SimpleEcho(WebSocket):
 
     def boilWater(self, data):
         print("#########")
-        print("Boiling")
+        print("Boiling", data)
         message = {"Type": "State", "Message": "Boiling"}
         # message = unicode(message)
         # self.sendMessage(message)
         oz = data["Data"]["Oz"]
         coffee_type = data["Data"]["Type"]
+        print(coffee_type, oz)
 
         wait_time = 420
         # wait_time = 1
