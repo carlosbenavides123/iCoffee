@@ -14,7 +14,7 @@ device_file = device_folder + '/w1_slave'
 GPIO.setmode(GPIO.BCM)
 GPIO_1 = 17
 GPIO_2 = 2
-GPIO.setup(GPIO_1, GPIO.OUT)
+# GPIO.setup(GPIO_1, GPIO.OUT)
 
 import ast
 clients = []
