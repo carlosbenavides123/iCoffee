@@ -6,15 +6,15 @@ import RPi.GPIO as GPIO
 import threading
 import requests
 import json
-# os.system('modprobe w1-gpio')
-# os.system('modprobe w1-therm')
-# base_dir = '/sys/bus/w1/devices/'
-# device_folder = glob.glob(base_dir + '28*')[0]
-# device_file = device_folder + '/w1_slave'
-# GPIO.setmode(GPIO.BCM)
-# GPIO_1 = 17
-# GPIO_2 = 2
-# GPIO.setup(GPIO_1, GPIO.OUT)
+os.system('modprobe w1-gpio')
+os.system('modprobe w1-therm')
+base_dir = '/sys/bus/w1/devices/'
+device_folder = glob.glob(base_dir + '28*')[0]
+device_file = device_folder + '/w1_slave'
+GPIO.setmode(GPIO.BCM)
+GPIO_1 = 17
+GPIO_2 = 2
+GPIO.setup(GPIO_1, GPIO.OUT)
 
 import ast
 clients = []
@@ -76,9 +76,9 @@ class SimpleEcho(WebSocket):
         threading.Timer(wait_time, self.send_fcm_notif, [device_id]).start()
 
 
-        # GPIO.output(GPIO_1, False)
+        GPIO.output(GPIO_1, False)
         self.get_temp(coffee_type)
-        # GPIO.output(GPIO_1, True)
+        GPIO.output(GPIO_1, True)
         print("off")
         time.sleep(1)
 
@@ -124,12 +124,11 @@ class SimpleEcho(WebSocket):
         temp = 195
         if coffee_type != "Regular Coffee":
             temp = 205
-        print(temp)
-        # while True:
-        #     c, f = read_temp()
-        #     print(c, f)
-        #     if f >= temp:
-        #         break
+        while True:
+            c, f = read_temp()
+            print(c, f)
+            if f >= temp:
+                break
 
 
 server = SimpleWebSocketServer("0.0.0.0", 12345, SimpleEcho)

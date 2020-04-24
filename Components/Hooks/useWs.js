@@ -76,6 +76,7 @@ export function useWs(){
 
     useEffect(() => {
 		if (state.iCoffeeIP == null){
+			state.updateiCoffeeIP("192.168.43.234")
 			return
 		}
 		var wsIp;
