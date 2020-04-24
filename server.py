@@ -12,9 +12,15 @@ base_dir = '/sys/bus/w1/devices/'
 device_folder = glob.glob(base_dir + '28*')[0]
 device_file = device_folder + '/w1_slave'
 GPIO.setmode(GPIO.BCM)
+# kettle
 GPIO_1 = 17
-GPIO_2 = 2
+# motor forward
+GPIO_2 = 27
+# motor reverse
+GPIO_3 = 22
 GPIO.setup(GPIO_1, GPIO.IN)
+GPIO.setup(GPIO_2, GPIO.OUT)
+GPIO.setup(GPIO_3, GPIO.OUT)
 
 import ast
 clients = []
@@ -90,10 +96,15 @@ class SimpleEcho(WebSocket):
         message = unicode(message)
         self.sendMessage(message)
 
-        GPIO.setup(GPIO_2, False)
-        time.sleep(30)
+        # GPIO.setup(GPIO_2, False)
+        print("motor forward")
         GPIO.setup(GPIO_2, True)
+        GPIO.setup(GPIO_3, False)
+        time.sleep(30)
+        GPIO.setup(GPIO_2, False)
+        GPIO.setup(GPIO_3, True)
         print("done")
+        GPIO.cleanup()
 
 
     def send_fcm_notif(self, device_id):
