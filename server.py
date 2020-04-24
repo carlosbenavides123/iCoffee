@@ -14,7 +14,7 @@ device_file = device_folder + '/w1_slave'
 GPIO.setmode(GPIO.BCM)
 GPIO_1 = 17
 GPIO_2 = 2
-# GPIO.setup(GPIO_1, GPIO.OUT)
+GPIO.setup(GPIO_1, GPIO.IN)
 
 import ast
 clients = []
@@ -64,8 +64,8 @@ class SimpleEcho(WebSocket):
         print("#########")
         print("Boiling")
         message = {"Type": "State", "Message": "Boiling"}
-        message = unicode(message)
-        self.sendMessage(message)
+        # message = unicode(message)
+        # self.sendMessage(message)
         oz = data["Data"]["Oz"]
         coffee_type = data["Data"]["Type"]
 
