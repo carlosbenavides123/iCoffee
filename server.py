@@ -75,7 +75,7 @@ class SimpleEcho(WebSocket):
         device_id = "dVtCi3loRKCgsAyuQrW8bP:APA91bGIUCspZLJ2nJ3TrNRM775ANsGF5C2ra6_6ZaSETY4YKEFHWWcBhS4KXuL3m0YQ-HzRK8KZhtHU5tDszMyjtvGwJlARW_sZBGwZbesL8Yu_llUp0u7Ouvv-WMI0tixrlBxqL1L4"
         threading.Timer(wait_time, self.send_fcm_notif, [device_id]).start()
 
-
+        print("start to boil")
         GPIO.output(GPIO_1, False)
         self.get_temp(coffee_type)
         GPIO.output(GPIO_1, True)
@@ -118,6 +118,7 @@ class SimpleEcho(WebSocket):
             temp_string = lines[1][equals_pos+2:]
             temp_c = float(temp_string) / 1000.0
             temp_f = temp_c * 9.0 / 5.0 + 32.0
+            print(temp_c, temp_f, "LOG")
             return temp_c, temp_f
 
     def get_temp(self, coffee_type):
@@ -126,6 +127,7 @@ class SimpleEcho(WebSocket):
             temp = 205
         while True:
             c, f = read_temp()
+            
             print(c, f)
             if f >= temp:
                 break
